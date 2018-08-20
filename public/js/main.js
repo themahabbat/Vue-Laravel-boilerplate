@@ -11489,11 +11489,16 @@ module.exports = __webpack_require__(23);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navbar_vue__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Navbar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__helpers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Navbar_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Navbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Navbar_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(21);
 // GLOBAL VUE INSTANCE
 window.Vue = __webpack_require__(1);
+
+// HELPERS
+
 
 // INIT COMPONENT
 // Vue.component('navbar', require('./components/Navbar.vue'));
@@ -11511,11 +11516,11 @@ var app = new Vue({
     el: '#-app',
 
     // INIT STORE
-    store: __WEBPACK_IMPORTED_MODULE_1__store__["a" /* store */],
+    store: __WEBPACK_IMPORTED_MODULE_2__store__["a" /* store */],
 
     // WITH IMPORT, DON'T USE IF COMPONENT INITIALIZED WITH Vue.component
     components: {
-        Navbar: __WEBPACK_IMPORTED_MODULE_0__components_Navbar_vue___default.a
+        Navbar: __WEBPACK_IMPORTED_MODULE_1__components_Navbar_vue___default.a
     }
 });
 
@@ -12153,6 +12158,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -12176,7 +12183,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Fixed: __WEBPACK_IMPORTED_MODULE_0__Fixed_vue___default.a
   },
 
-  // INITIAL STATE
+  // INITIAL STATE (DOESN'T SYNCHRONIZE WITH STORE)
   data: function data() {
 
     return {
@@ -12184,12 +12191,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       description: this.$store.state.title
     };
   },
-  created: function created() {
-    // LISTEN FOR EVENTS
 
-    eventBus.$on('randomData', function (data) {
-      return alert(data);
+
+  // COMPUTED DATA (SYNCHRONIZES WITH STORE AUTOMATICALLY)
+  computed: {
+    replacedTitle: function replacedTitle() {
+      return this.$store.getters.replacedTitle;
+    }
+  },
+
+  // WHEN COMPONENT CREATED
+  created: function created() {
+
+    // LISTEN FOR EVENTS
+    eventBus.$on('sampleEvent', function (data) {
+      return alert('EVENT RECEIVED: ' + data);
     });
+  },
+
+
+  // CLEAR MEMORY BEFORE DESTROY
+  beforeDestroy: function beforeDestroy() {
+    eventBus.$off('sampleEvent');
   },
 
 
@@ -12197,10 +12220,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     toggleAnimation: function toggleAnimation() {
       this.show = !this.show;
     },
-    emitEvent: function emitEvent(bg) {
-      // MAKE AND CALL EVENTS
+    sampleEvent: function sampleEvent() {
 
-      eventBus.$emit('randomData', Math.random() * 100);
+      // MAKE AND CALL EVENTS
+      eventBus.$emit('sampleEvent', Math.random() * 100);
+    },
+    changeTitle: function changeTitle() {
+      this.$store.dispatch('changeTitle', 'Changed!');
+    },
+    clearTitle: function clearTitle() {
+      this.$store.dispatch('clearTitle');
     }
   }
 
@@ -12502,7 +12531,13 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("ul", { staticClass: "pull-right margin-none" }, [
-                        _c("h4", [_vm._v(_vm._s(_vm.description))])
+                        _c("h6", [
+                          _vm._v(
+                            _vm._s(_vm.description) +
+                              " / " +
+                              _vm._s(_vm.replacedTitle)
+                          )
+                        ])
                       ])
                     ]
                   )
@@ -12529,9 +12564,27 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info radius-2",
-              on: { click: _vm.emitEvent }
+              on: { click: _vm.sampleEvent }
             },
             [_vm._v("Emit EventBus Event")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info radius-2",
+              on: { click: _vm.changeTitle }
+            },
+            [_vm._v("Change Title (Dispatch to Store)")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info radius-2",
+              on: { click: _vm.clearTitle }
+            },
+            [_vm._v("Clear Title (Dispatch with same mutation)")]
           )
         ]
       )
@@ -12558,16 +12611,35 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__state__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getters__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mutations__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions__ = __webpack_require__(31);
 
 
 
+// INITIALIZE VUEX INSIDE MAIN VUE INSTANCE
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+// IMPORT ALL ACTIONS
+
+
+
+
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
-   state: {
-      title: 'Data from Store :]'
-   }
+   // INITIAL STATE
+   state: __WEBPACK_IMPORTED_MODULE_2__state__["a" /* default */],
+
+   // COMPUTED STATE
+   getters: __WEBPACK_IMPORTED_MODULE_3__getters__["a" /* default */],
+
+   // MUTATIONS (SYNC: FUNCTIONS WHICH CAN CHANGE STATE)
+   mutations: __WEBPACK_IMPORTED_MODULE_4__mutations__["a" /* default */],
+
+   // ACTIONS (ASYNC: FUNCTIONS WHICH DISPATCHES MUTATIONS)
+   actions: __WEBPACK_IMPORTED_MODULE_5__actions__["a" /* default */]
 
 });
 
@@ -13521,6 +13593,80 @@ var index_esm = {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
+/***/ (function(module, exports) {
+
+String.prototype.replaceAll = function (search, replacement) {
+   var target = this;
+   return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+/***/ }),
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// ACTIONS ARE ASYNC AND CAN DO / COMMIT MULTIPLE MUTATIONS
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+   // MULTIPLE ACTIONS(JOBS) WITH JUST ONE MUTATION
+
+   changeTitle: function changeTitle(_ref, title) {
+      var commit = _ref.commit;
+
+      commit('changeTitle', title);
+   },
+   clearTitle: function clearTitle(_ref2) {
+      var commit = _ref2.commit;
+
+      commit('changeTitle', '');
+   }
+});
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// MUTATIONS ARE SYNC CHANGES
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+   changeTitle: function changeTitle(state, title) {
+      state.title = title;
+   }
+});
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// INITIAL STATE
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+   title: 'From Store :]'
+});
+
+/***/ }),
+/* 34 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+      replacedTitle: function replacedTitle(state) {
+            return state.title.replaceAll(':]', '(computed)');
+      }
+
+});
 
 /***/ })
 /******/ ]);

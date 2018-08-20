@@ -1,6 +1,9 @@
 // GLOBAL VUE INSTANCE
 window.Vue = require('vue');
 
+// HELPERS
+import './helpers'
+
 // INIT COMPONENT
 // Vue.component('navbar', require('./components/Navbar.vue'));
 import Navbar from './components/Navbar.vue'

@@ -33,7 +33,7 @@
           </ul>
 
           <ul class="pull-right margin-none">
-            <h4>{{ description }}</h4>
+            <h6>{{ description }} / {{ replacedTitle }}</h6>
           </ul>
         </div>
       </nav>
@@ -41,7 +41,9 @@
   
     <fixed class="width-full text-center" to="bottom">
       <button class="btn btn-primary radius-2" @click="toggleAnimation">Toggle Animation</button>
-      <button class="btn btn-info radius-2" @click="emitEvent">Emit EventBus Event</button>
+      <button class="btn btn-info radius-2" @click="sampleEvent">Emit EventBus Event</button>
+      <button class="btn btn-info radius-2" @click="changeTitle">Change Title (Dispatch to Store)</button>
+      <button class="btn btn-info radius-2" @click="clearTitle">Clear Title (Dispatch with same mutation)</button>
     </fixed>
   
   </div>
@@ -70,7 +72,7 @@
       Fixed
     },
   
-    // INITIAL STATE
+    // INITIAL STATE (DOESN'T SYNCHRONIZE WITH STORE)
     data() {
   
       return {
@@ -79,12 +81,27 @@
       }
   
     },
+
+    // COMPUTED DATA (SYNCHRONIZES WITH STORE AUTOMATICALLY)
+    computed: {
+
+      replacedTitle() {
+        return this.$store.getters.replacedTitle
+      }
+
+    },
   
+    // WHEN COMPONENT CREATED
     created() {
+
       // LISTEN FOR EVENTS
+      eventBus.$on('sampleEvent', (data) => alert('EVENT RECEIVED: ' + data))
   
-      eventBus.$on('randomData', (data) => alert(data))
-  
+    },
+
+    // CLEAR MEMORY BEFORE DESTROY
+    beforeDestroy(){
+      eventBus.$off('sampleEvent')
     },
   
     methods: {
@@ -93,10 +110,18 @@
         this.show = !this.show;
       },
   
-      emitEvent(bg) {
+      sampleEvent() {
+
         // MAKE AND CALL EVENTS
-  
-        eventBus.$emit('randomData', Math.random() * 100)
+        eventBus.$emit('sampleEvent', Math.random() * 100)
+      },
+
+      changeTitle(){
+        this.$store.dispatch('changeTitle', 'Changed!')
+      },
+
+      clearTitle(){
+        this.$store.dispatch('clearTitle')
       }
   
     }
