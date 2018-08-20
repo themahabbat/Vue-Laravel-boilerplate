@@ -5,6 +5,10 @@
 // Variables
 @import 'variables';
 
-body,input,select,option,button,div,p {
-  font-family: 'Nunito';
-}
+// Libraries
+@import 'pace';
+@import 'animate';
+
+@import 'func';
+
+@import 'global';

@@ -18,7 +18,7 @@
         
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <script src="https://raw.githubusercontent.com/HubSpot/pace/v1.0.0/pace.min.js"></script>
+        <script src="{{ asset('js/pace.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
         @stack('foot')
     </body>

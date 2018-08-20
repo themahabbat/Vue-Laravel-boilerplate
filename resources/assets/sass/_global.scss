@@ -1,0 +1,61 @@
+body,
+input,
+select,
+option,
+button,
+div,
+p {
+   font-family: "Nunito";
+}
+
+.fragment {
+   margin: 0 !important;
+   padding: 0 !important;
+   border: 0 !important;
+   display: block !important;
+
+   &-inline {
+      display: inline-block !important;
+   }
+}
+
+.center-hv {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+.width-full {
+   width: 100vw !important;
+}
+
+.margin-none {
+   margin: 0;
+}
+
+.padding-none {
+   padding: 0;
+}
+
+
+// BORDER RADIUS
+.radius-none {
+   border-radius: 0 !important;
+}
+
+.radius-circle {
+   border-radius: 50% !important;
+}
+
+.fixed-top {
+   position: fixed;
+   left: 0;
+   top: 0;
+}
+
+.fixed-bottom {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+}
