@@ -1,6 +1,5 @@
 <template>
-  <div class="fragment">
-  
+
     <transition name="fade" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
       <nav v-if="show" class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">{{ title || 'Brand' }}</a>
@@ -11,10 +10,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <router-link class="nav-link" :to="{ name: 'home' }">Home <span class="sr-only">(current)</span></router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'user', params: { id: id } }">Random User</router-link>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,9 +29,17 @@
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
+          </ul>
+
+          <ul class="navbar-nav mr-auto">
+            
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+              <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
+            </li>
+
           </ul>
 
           <ul class="pull-right margin-none">
@@ -38,94 +48,50 @@
         </div>
       </nav>
     </transition>
-  
-    <fixed class="width-full text-center" to="bottom">
-      <button class="btn btn-primary radius-2" @click="toggleAnimation">Toggle Animation</button>
-      <button class="btn btn-info radius-2" @click="sampleEvent">Emit EventBus Event</button>
-      <button class="btn btn-info radius-2" @click="changeTitle">Change Title (Dispatch to Store)</button>
-      <button class="btn btn-info radius-2" @click="clearTitle">Clear Title (Dispatch with same mutation)</button>
-    </fixed>
-  
-  </div>
+
 </template>
 
 <script>
-  import Fixed from './Fixed.vue';
-  
   export default {
     // COMPONENT SELECTOR
     name: "navbar",
-  
+
+    // PROPERTIES
     props: {
-      // PROPERTIES
-  
-      title: String,
-      auth: {
+
+      show: {
         type: Boolean,
         required: true
+      },
+
+      title: {
+        type: String,
+        required: true
       }
+
     },
-  
-    components: {
-      // INCLUDED COMPONENTS
-  
-      Fixed
-    },
-  
-    // INITIAL STATE (DOESN'T SYNCHRONIZE WITH STORE)
+
+    // COMPONENT STATE
     data() {
   
       return {
-        show: false,
         description: this.$store.state.title
       }
   
     },
 
-    // COMPUTED DATA (SYNCHRONIZES WITH STORE AUTOMATICALLY)
+    // COMPUTED DATA (SYNCHRONIZED DATA)
     computed: {
+
+      id(){
+        return Math.floor( Math.random() * 10 )
+      },
 
       replacedTitle() {
         return this.$store.getters.replacedTitle
       }
 
     },
-  
-    // WHEN COMPONENT CREATED
-    created() {
-
-      // LISTEN FOR EVENTS
-      eventBus.$on('sampleEvent', (data) => alert('EVENT RECEIVED: ' + data))
-  
-    },
-
-    // CLEAR MEMORY BEFORE DESTROY
-    beforeDestroy(){
-      eventBus.$off('sampleEvent')
-    },
-  
-    methods: {
-  
-      toggleAnimation() {
-        this.show = !this.show;
-      },
-  
-      sampleEvent() {
-
-        // MAKE AND CALL EVENTS
-        eventBus.$emit('sampleEvent', Math.random() * 100)
-      },
-
-      changeTitle(){
-        this.$store.dispatch('changeTitle', 'Changed!')
-      },
-
-      clearTitle(){
-        this.$store.dispatch('clearTitle')
-      }
-  
-    }
-  
   }
 </script>
 

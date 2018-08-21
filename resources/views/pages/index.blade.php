@@ -4,6 +4,6 @@
 
 @section('content')
 
-   <navbar title="Main" auth="{{ \Auth::check() ? true : false }}"></navbar>
+   <div id="-main"></div>
 
 @endsection
