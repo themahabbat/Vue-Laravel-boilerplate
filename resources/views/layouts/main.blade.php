@@ -8,8 +8,8 @@
     
     <title>@yield('title', config('app.name'))</title>
     
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     
     @stack('head')
 </head>

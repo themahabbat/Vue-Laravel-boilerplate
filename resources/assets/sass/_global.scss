@@ -8,6 +8,12 @@ p {
    font-family: "Nunito";
 }
 
+body,html {
+   margin: 0;
+   padding: 0;
+   background: white;
+}
+
 .fragment {
    margin: 0 !important;
    padding: 0 !important;

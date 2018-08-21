@@ -5868,6 +5868,13 @@ p {
   font-family: "Nunito";
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background: white;
+}
+
 .fragment {
   margin: 0 !important;
   padding: 0 !important;
@@ -5927,5 +5934,33 @@ p {
 
 nav {
   border-bottom: 1px solid #d8d8d8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 20%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.form-group {
+  position: relative;
+  padding: 2px;
+}
+
+input.form-control {
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1.5px 0 #d8d8d8;
+          box-shadow: 0 1.5px 0 #d8d8d8;
+  outline: none;
+  border-color: #d8d8d8;
+}
+
+input.form-control + label {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  z-index: 2;
 }
 
