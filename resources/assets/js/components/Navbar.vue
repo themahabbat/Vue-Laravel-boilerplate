@@ -33,11 +33,14 @@
 
           <ul class="navbar-nav mr-auto">
             
-            <li class="nav-item">
+            <li v-if="!auth" class="nav-item">
               <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
             </li>
-            <li class="nav-item">
+            <li v-if="!auth" class="nav-item">
               <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
+            </li>
+            <li v-if="auth" class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'logout' }">Logout</router-link>
             </li>
 
           </ul>
@@ -89,6 +92,10 @@
 
       replacedTitle() {
         return this.$store.getters.replacedTitle
+      },
+
+      auth(){
+        return this.$store.getters.auth
       }
 
     },

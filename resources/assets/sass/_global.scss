@@ -5,10 +5,11 @@ option,
 button,
 div,
 p {
-   font-family: "Nunito";
+   font-family: "Open Sans";
 }
 
 body,html {
+   overflow: hidden;
    margin: 0;
    padding: 0;
    background: white;

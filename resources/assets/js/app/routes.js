@@ -4,6 +4,8 @@ import User from '../pages/User'
 
 import Login from '../auth/Login'
 import Register from '../auth/Register'
+import Logout from '../auth/Logout'
+
 
 export default [
 
@@ -31,13 +33,28 @@ export default [
    {
       name: 'login',
       path: '/login',
-      component: Login
+      component: Login,
+      meta: {
+         requiresGuest: true
+      }
    },
 
    {
       name: 'register',
       path: '/register',
-      component: Register
+      component: Register,
+      meta: {
+         requiresGuest: true
+      }
+   },
+
+   {
+      name: 'logout',
+      path: '/logout',
+      component: Logout,
+      meta: {
+         requiresAuth: true
+      }
    },
 
 

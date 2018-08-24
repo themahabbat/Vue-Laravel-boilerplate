@@ -1,6 +1,3 @@
-// GLOBAL VUE INSTANCE
-window.Vue = require('vue');
-
 // IMPORT ROUTER AND ROUTES
 import VueRouter from 'vue-router'
 import routes from './app/routes'
@@ -15,6 +12,17 @@ import Master from './layouts/Master'
 // IMPORT STORE
 import { store } from './store'
 
+import axios from 'axios'
+
+// MAIN CONFIGURATION
+import config from './app/config'
+
+axios.defaults.baseURL = config.api
+
+
+// GLOBAL VUE INSTANCE
+window.Vue = require('vue');
+
 Vue.use(VueRouter)
 
 // GLOBAL EVENTBUS
@@ -28,16 +36,48 @@ const router = new VueRouter({
     routes
 })
 
+// CHECK ROUTE META PARAMETERS
+router.beforeEach((to, from, next) => {
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!store.getters.auth()) {
+            next({
+                name: 'login'
+            })
+        } else {
+            next()
+        }
+    }
+    else if (to.matched.some(record => record.meta.requiresGuest)) {
+        // this route requires guest, check if logged in
+        // if true, redirect to home page.
+        if (store.getters.auth()) {
+            next({
+                name: 'home'
+            })
+        } else {
+            next()
+        }
+    }
+    else {
+        // IF ROUTE DOESN'T HAVE ANY META PARAMETERS
+        // JUST CONTINUE
+        next()
+    }
+})
+
 
 // INIT APP
 const app = new Vue({
-
+    
     // WHERE TO WRAP APPLICATION
     el: '#-main',
-
+    
     // WRAP ROUTER
     router,
-
+    
     // INIT STORE
     store,
     
@@ -45,7 +85,7 @@ const app = new Vue({
     components: {
         Master
     },
-
+    
     // MAIN WRAPPER
     template: '<Master/>'
 });

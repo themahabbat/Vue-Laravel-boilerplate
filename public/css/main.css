@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
+@import url(https://fonts.googleapis.com/css?family=Nunito|Open+Sans|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
 
 .pace {
   -webkit-pointer-events: none;
@@ -5865,11 +5865,12 @@ option,
 button,
 div,
 p {
-  font-family: "Nunito";
+  font-family: "Open Sans";
 }
 
 body,
 html {
+  overflow: hidden;
   margin: 0;
   padding: 0;
   background: white;
@@ -5938,15 +5939,25 @@ nav {
 
 .grid {
   display: grid;
-  grid-template-columns: 20%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  grid-template-columns: 100%;
+}
+
+.grid-sm {
+  width: 50%;
+}
+
+.justify-center {
+  justify-self: center;
 }
 
 .form-group {
   position: relative;
   padding: 2px;
+  width: 100%;
+}
+
+.form-group input {
+  width: 100%;
 }
 
 input.form-control {
@@ -5955,12 +5966,30 @@ input.form-control {
           box-shadow: 0 1.5px 0 #d8d8d8;
   outline: none;
   border-color: #d8d8d8;
+  -webkit-transition: 0.4s ease all;
+  transition: 0.4s ease all;
+  color: transparent;
 }
 
 input.form-control + label {
   position: absolute;
-  top: 5px;
-  left: 10px;
+  top: 8.5px;
+  left: 15px;
   z-index: 2;
+  -webkit-transition: 0.4s ease all;
+  transition: 0.4s ease all;
+}
+
+input.form-control:focus {
+  margin-top: 25px;
+  -webkit-transform: skewX(10deg);
+          transform: skewX(10deg);
+}
+
+input.form-control:focus + label {
+  top: -4px;
+  left: 2px;
+  font-weight: bold;
+  font-size: 1.1em;
 }
 

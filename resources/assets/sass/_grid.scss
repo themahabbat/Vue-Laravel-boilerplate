@@ -1,6 +1,12 @@
 .grid {
    display: grid;
-   grid-template-columns: 20%;
-   justify-content: center;
+   grid-template-columns: 100%;
 }
 
+.grid-sm {
+   width: 50%;
+}
+
+.justify-center {
+   justify-self: center;
+}
