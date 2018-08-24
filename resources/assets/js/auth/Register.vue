@@ -6,6 +6,11 @@
             <h3 class="margin-bottom-20">Register</h3>
 
             <div class="form-group">
+               <input type="text" name="name" id="name" class="form-control" v-model="name">
+               <label for="name">Full Name</label>
+            </div>
+
+            <div class="form-group">
                <input type="email" name="email" id="email" class="form-control" v-model="email">
                <label for="email">Email</label>
             </div>
@@ -15,7 +20,7 @@
                <label for="password">Password</label>
             </div>
 
-            <button class="btn btn-primary" @click="login">Login</button>
+            <button class="btn btn-primary" @click="register">Register</button>
 
          </div>
          
@@ -26,11 +31,12 @@
 
 <script>
 export default {
-   name: 'Login',
+   name: 'Register',
 
    data(){
 
       return {
+         name: '',
          email: '',
          password: ''
       }
@@ -39,13 +45,15 @@ export default {
 
    methods: {
 
-      login(){
+      register(){
          
-         this.$store.dispatch('login', {
+         this.$store.dispatch('register', {
+            name: this.name,
             email: this.email,
             password: this.password
          }).then(res => {
-            this.$router.push({ name: 'home' })
+            if(res.data.id)alert('Registered. Now you can login.')
+            this.$router.push({ name: 'login' })
          })
       }
 
@@ -56,6 +64,6 @@ export default {
 
 <style lang="scss" scoped>
 
-.login {}
+.register {}
 
 </style>

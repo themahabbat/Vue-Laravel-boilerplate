@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (!store.getters.auth()) {
+        if (!store.getters.auth) {
             next({
                 name: 'login'
             })
@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
     else if (to.matched.some(record => record.meta.requiresGuest)) {
         // this route requires guest, check if logged in
         // if true, redirect to home page.
-        if (store.getters.auth()) {
+        if (store.getters.auth) {
             next({
                 name: 'home'
             })

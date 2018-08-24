@@ -12421,7 +12421,7 @@ router.beforeEach(function (to, from, next) {
     })) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (!__WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */].getters.auth()) {
+        if (!__WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */].getters.auth) {
             next({
                 name: 'login'
             });
@@ -12433,7 +12433,7 @@ router.beforeEach(function (to, from, next) {
     })) {
         // this route requires guest, check if logged in
         // if true, redirect to home page.
-        if (__WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */].getters.auth()) {
+        if (__WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */].getters.auth) {
             next({
                 name: 'home'
             });
@@ -17970,15 +17970,30 @@ var index_esm = {
                   });
             });
       },
+      register: function register(_ref4, credentials) {
+            var commit = _ref4.commit;
+
+
+            return new Promise(function (resolve, reject) {
+
+                  __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/register", {
+                        name: credentials.name,
+                        email: credentials.email,
+                        password: credentials.password
+                  }).then(function (res) {
+                        resolve(res);
+                  }).catch(function (err) {
+                        console.log(err);
+                        reject(err);
+                  });
+            });
+      },
       logout: function logout(context) {
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
             if (context.getters.auth) {
                   return new Promise(function (resolve, reject) {
 
-                        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout", {
-                              email: credentials.email,
-                              password: credentials.password
-                        }).then(function (res) {
+                        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post("/api/logout").then(function (res) {
                               localStorage.removeItem("access_token");
                               context.commit("logout");
 
@@ -18953,7 +18968,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
    name: 'Logout',
@@ -19059,13 +19073,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-   name: 'Login',
+   name: 'Register',
 
    data: function data() {
 
       return {
+         name: '',
          email: '',
          password: ''
       };
@@ -19073,14 +19093,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
    methods: {
-      login: function login() {
+      register: function register() {
          var _this = this;
 
-         this.$store.dispatch('login', {
+         this.$store.dispatch('register', {
+            name: this.name,
             email: this.email,
             password: this.password
          }).then(function (res) {
-            _this.$router.push({ name: 'home' });
+            if (res.data.id) alert('Registered. Now you can login.');
+            _this.$router.push({ name: 'login' });
          });
       }
    }
@@ -19099,6 +19121,32 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-8 col-sm-8 col-md-3 login" }, [
         _c("h3", { staticClass: "margin-bottom-20" }, [_vm._v("Register")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", name: "name", id: "name" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "name" } }, [_vm._v("Full Name")])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c("input", {
@@ -19154,8 +19202,8 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.login } },
-          [_vm._v("Login")]
+          { staticClass: "btn btn-primary", on: { click: _vm.register } },
+          [_vm._v("Register")]
         )
       ])
     ])

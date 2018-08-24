@@ -38,6 +38,29 @@ export default {
             
             
       },
+
+      register({ commit }, credentials) {
+
+            return new Promise((resolve, reject) => {
+
+                  axios
+                        .post("/api/register", {
+                              name: credentials.name,
+                              email: credentials.email,
+                              password: credentials.password
+                        })
+                        .then(res => {
+                              resolve(res)
+                        })
+                        .catch(err => {
+                              console.log(err)
+                              reject(err)
+                        })
+
+            })
+
+
+      },
       
       
       logout(context) {
@@ -46,10 +69,7 @@ export default {
                   return new Promise((resolve, reject)=>{
                         
                         axios
-                        .post("/api/logout", {
-                              email: credentials.email,
-                              password: credentials.password
-                        })
+                        .post("/api/logout")
                         .then(res => {
                               localStorage.removeItem("access_token");
                               context.commit("logout");
