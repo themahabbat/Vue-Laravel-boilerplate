@@ -1,7 +1,7 @@
 // INITIAL STATE
 
 export default {
-   title: 'From Store :]',
+    title: 'From Store :]',
 
-   token: localStorage.getItem('access_token') || null
+    token: localStorage.getItem('access_token') || null
 }

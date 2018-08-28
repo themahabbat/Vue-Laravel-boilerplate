@@ -50,14 +50,15 @@ export default {
                     password: credentials.password
                 })
                 .then(res => {
-                    const token = res.data.access_token;
-                    localStorage.setItem("access_token", token);
-                    commit("login", token);
+                    const token = res.data.access_token
+                    localStorage.setItem("access_token", token)
+                    commit("login", token)
 
+                    resolve(res)
                 })
                 .catch(err => {
                     console.log(err)
-                    reject(err)
+                    reject(err.response.data)
                 })
 
         })

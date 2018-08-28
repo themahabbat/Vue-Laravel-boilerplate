@@ -17,13 +17,21 @@ import axios from 'axios'
 // MAIN CONFIGURATION
 import config from './app/config'
 
+// IMPORT VUE MATERIAL DESIGN
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+
 axios.defaults.baseURL = config.api
 
 
 // GLOBAL VUE INSTANCE
 window.Vue = require('vue');
 
+
+// BIND ROUTER AND DESIGN TO INSTANCE
 Vue.use(VueRouter)
+Vue.use(Vuetify)
 
 // GLOBAL EVENTBUS
 // THIS KIND OF EVENTS CAN BE EMIT AND LISTENED EVERYWHERE

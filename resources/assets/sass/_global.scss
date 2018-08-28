@@ -5,7 +5,7 @@ option,
 button,
 div,
 p {
-   font-family: "Open Sans";
+   font-family: "Roboto";
 }
 
 body,html {
@@ -75,4 +75,8 @@ body,html {
 
 nav {
    border-bottom: 1px solid #d8d8d8;
+}
+
+.faded {
+   opacity: 0.2;
 }

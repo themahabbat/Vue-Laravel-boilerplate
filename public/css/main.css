@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito|Open+Sans|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
+@import url(https://fonts.googleapis.com/css?family=Roboto|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
 
 .pace {
   -webkit-pointer-events: none;
@@ -3584,6 +3584,30 @@
   }
 }
 
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  to {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotateZ(0deg);
+            transform: rotateZ(0deg);
+  }
+
+  to {
+    -webkit-transform: rotateZ(360deg);
+            transform: rotateZ(360deg);
+  }
+}
+
 .radius-0 {
   border-radius: 0px !important;
 }
@@ -5865,7 +5889,7 @@ option,
 button,
 div,
 p {
-  font-family: "Open Sans";
+  font-family: "Roboto";
 }
 
 body,
@@ -5937,6 +5961,10 @@ nav {
   border-bottom: 1px solid #d8d8d8;
 }
 
+.faded {
+  opacity: 0.2;
+}
+
 .grid {
   display: grid;
   grid-template-columns: 100%;
@@ -5948,48 +5976,5 @@ nav {
 
 .justify-center {
   justify-self: center;
-}
-
-.form-group {
-  position: relative;
-  padding: 2px;
-  width: 100%;
-}
-
-.form-group input {
-  width: 100%;
-}
-
-input.form-control {
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1.5px 0 #d8d8d8;
-          box-shadow: 0 1.5px 0 #d8d8d8;
-  outline: none;
-  border-color: #d8d8d8;
-  -webkit-transition: 0.4s ease all;
-  transition: 0.4s ease all;
-  color: transparent;
-}
-
-input.form-control + label {
-  position: absolute;
-  top: 8.5px;
-  left: 15px;
-  z-index: 2;
-  -webkit-transition: 0.4s ease all;
-  transition: 0.4s ease all;
-}
-
-input.form-control:focus {
-  margin-top: 25px;
-  -webkit-transform: skewX(10deg);
-          transform: skewX(10deg);
-}
-
-input.form-control:focus + label {
-  top: -4px;
-  left: 2px;
-  font-weight: bold;
-  font-size: 1.1em;
 }
 
