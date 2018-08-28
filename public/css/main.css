@@ -5892,6 +5892,11 @@ p {
   font-family: "Roboto";
 }
 
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 body,
 html {
   overflow: hidden;
@@ -5963,6 +5968,11 @@ nav {
 
 .faded {
   opacity: 0.2;
+}
+
+.standart {
+  padding: 0;
+  margin: 0;
 }
 
 .grid {

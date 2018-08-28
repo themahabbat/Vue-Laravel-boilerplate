@@ -8,6 +8,10 @@ p {
    font-family: "Roboto";
 }
 
+* {
+   box-sizing: border-box;
+}
+
 body,html {
    overflow: hidden;
    margin: 0;
@@ -79,4 +83,9 @@ nav {
 
 .faded {
    opacity: 0.2;
+}
+
+.standart {
+   padding: 0;
+   margin: 0;
 }

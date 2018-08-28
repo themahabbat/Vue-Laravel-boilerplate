@@ -69,6 +69,7 @@ export default {
 
     logout(context) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token
+
         if (context.getters.auth) {
             return new Promise((resolve, reject) => {
 

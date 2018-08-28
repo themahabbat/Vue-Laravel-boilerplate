@@ -1,41 +1,68 @@
 <template>
     <v-layout row wrap align-center justify-center>
 
-        <v-flex xs10 lg3 :class="{ faded: isLoading }">
-            <v-card class="elevation-6">
+        <v-flex xs10 lg4 :class="{ faded: isLoading }">
+            <v-card class="elevation-12">
 
                 <v-card-text>
                     <v-flex xs12>
                         <h3 class="margin-bottom-20">Register</h3>
                     </v-flex>
 
+                    <v-flex xs12>
+                        <transition enter-active-class="animated fadeIn"
+                                    leave-active-class="animated fadeOut">
+                            <v-alert v-if="apiErrors" :value="true" type="error">
+                                <ul class="standart">
+                                    <li v-for="(value, key) in apiErrors" :key="key">
+                                        {{ value[0] }}
+                                    </li>
+                                </ul>
+                            </v-alert>
+                        </transition>
+                    </v-flex>
+
                     <v-form>
 
-                        <v-text-field prepend-icon="person" v-model="name" label="Full name"
-                                      type="email">
+                        <v-text-field
+                                prepend-icon="person"
+                                name="name" v-model="name"
+                                label="Full name"
+                                type="text"
+                                :class="{ hasError: errors.has('name') }"
+                                :rules="( errors.first('name')) ? [errors.first('name')] : [true]"
+                                v-validate="'required'"
+                                v-on:keyup.enter="register"
+                                clearable
+                                solo>
                         </v-text-field>
-                        <transition enter-active-class="animated fadeIn"
-                                    leave-active-class="animated fadeOut">
-                            <v-alert outline="true" v-if="errors.name" :value="true" type="info">{{ errors.name }}
-                            </v-alert>
-                        </transition>
 
 
-                        <v-text-field prepend-icon="email" v-model="email" label="Email" type="text"></v-text-field>
-                        <transition enter-active-class="animated fadeIn"
-                                    leave-active-class="animated fadeOut">
-                            <v-alert outline="true" v-if="errors.email" :value="true" type="info">{{ errors.email }}
-                            </v-alert>
-                        </transition>
+                        <v-text-field
+                                prepend-icon="email"
+                                name="email"
+                                v-model="email"
+                                label="Email"
+                                type="text"
+                                :rules="( errors.first('email')) ? [errors.first('email')] : [true]"
+                                v-validate="'required|email'"
+                                v-on:keyup.enter="register"
+                                clearable
+                                solo></v-text-field>
 
-                        <v-text-field id="password" prepend-icon="lock" v-model="password" label="Password"
-                                      type="password"></v-text-field>
-                        <transition enter-active-class="animated fadeIn"
-                                    leave-active-class="animated fadeOut">
-                            <v-alert outline="true" v-if="errors.password" :value="true" type="info">{{ errors.password
-                                }}
-                            </v-alert>
-                        </transition>
+                        <v-text-field
+                                prepend-icon="lock"
+                                :append-icon="showPasswords ? 'visibility_off' : 'visibility'"
+                                name="password"
+                                v-model="password"
+                                label="Password"
+                                :rules="( errors.first('password')) ? [errors.first('password')] : [true]"
+                                :type="showPasswords ? 'text' : 'password'"
+                                v-validate="'required|min:6'"
+                                v-on:keyup.enter="register"
+                                clearable
+                                solo
+                                @click:append="showPasswords = !showPasswords"></v-text-field>
                     </v-form>
 
                     <v-flex xs12 lg12 text-center>
@@ -65,12 +92,9 @@
 
             return {
                 isLoading: false,
+                showPasswords: false,
 
-                errors: {
-                    name: '',
-                    email: '',
-                    password: ''
-                },
+                apiErrors: '',
 
                 name: '',
                 email: '',
@@ -82,6 +106,15 @@
         methods: {
 
             register() {
+                this.$validator.validateAll().then((result) => {
+
+                    console.log(result)
+
+
+                })
+
+                return;
+
                 this.isLoading = true
 
                 let _this = this
@@ -95,13 +128,11 @@
                 }).catch(error => {
                     this.isLoading = false
 
-                    if (error.errors.hasOwnProperty('name')) this.errors.name = error.errors.name[0]
-                    if (error.errors.hasOwnProperty('email')) this.errors.email = error.errors.email[0]
-                    if (error.errors.hasOwnProperty('password')) this.errors.password = error.errors.password[0]
+                    this.apiErrors = Object.values(error.errors)
 
-                    setTimeout(() => {
-                        Object.keys(this.errors).forEach((key) => this.errors[key] = '')
-                    }, 3 * 1000)
+                    // setTimeout(() => {
+                    //     Object.keys(this.errors).forEach((key) => this.errors[key] = '')
+                    // }, 3 * 1000)
 
                 })
             }
@@ -118,13 +149,13 @@
     }
 
     .v-alert {
-        padding: 0 !important;
-        border:0 !important;
-        margin-top: -14px;
+        border-radius: 4px;
+        padding: 0 1em !important;
+        margin-bottom: 2.5em;
+    }
 
-        &:not(:last-child) {
-            margin-bottom: 2.5em;
-        }
+    ul {
+        padding: 1em;
     }
 
 </style>

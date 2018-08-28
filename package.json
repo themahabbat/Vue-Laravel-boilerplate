@@ -17,13 +17,13 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
+      "vee-validate": "^2.1.0-beta.8",
         "vue": "^2.5.7",
         "vue-material": "^1.0.0-beta-10.2",
         "vue-router": "^3.0.1",
+      "vuetify": "^1.1.14",
         "vuex": "^3.0.1",
         "webpack-livereload-plugin": "^1.2.0"
     },
-    "dependencies": {
-        "vuetify": "^1.1.14"
-    }
+  "dependencies": {}
 }

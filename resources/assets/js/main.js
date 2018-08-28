@@ -21,6 +21,9 @@ import config from './app/config'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+// IMPORT VALIDATOR
+import VeeValidate from 'vee-validate';
+
 
 axios.defaults.baseURL = config.api
 
@@ -29,9 +32,10 @@ axios.defaults.baseURL = config.api
 window.Vue = require('vue');
 
 
-// BIND ROUTER AND DESIGN TO INSTANCE
+// BIND LIBRARIES TO INSTANCE
 Vue.use(VueRouter)
 Vue.use(Vuetify)
+Vue.use(VeeValidate)
 
 // GLOBAL EVENTBUS
 // THIS KIND OF EVENTS CAN BE EMIT AND LISTENED EVERYWHERE
