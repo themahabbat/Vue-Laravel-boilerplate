@@ -5,6 +5,9 @@ import routes from './app/routes'
 // HELPERS
 import './helpers'
 
+// INSTANCE BINDINGS
+import { toast } from './instance'
+
 // INIT COMPONENT
 // Vue.component('navbar', require('./components/Navbar.vue'));
 import Master from './layouts/Master'
@@ -21,6 +24,9 @@ import config from './app/config'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
+// IMPORT IZITOAST
+import 'izitoast/dist/css/iziToast.min.css'
+
 // IMPORT VALIDATOR
 import VeeValidate from 'vee-validate';
 
@@ -30,6 +36,12 @@ axios.defaults.baseURL = config.api
 
 // GLOBAL VUE INSTANCE
 window.Vue = require('vue');
+
+// GLOBAL IZITOAST INSTANCE
+window.toaster = require('izitoast')
+
+// BIND VUE INSTANCE PROPERTIES
+Vue.prototype.$toast = toast
 
 
 // BIND LIBRARIES TO INSTANCE

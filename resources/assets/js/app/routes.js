@@ -9,53 +9,55 @@ import Logout from '../auth/Logout'
 
 export default [
 
-   // WITH NAME: router-link :to={ name: 'home' }
-   // WITHOUT NAME: router-link to="/home"
+    // WITH NAME: router-link :to={ name: 'home' }
+    // WITHOUT NAME: router-link to="/home"
 
-   {
-      name: 'home',
-      path: '/',
-      component: Home
-   },
+    {
+        name: 'home',
+        path: '/',
+        component: Home
+    },
 
-   {
-      name: 'about',
-      path: '/about',
-      component: About
-   },
+    {
+        name: 'about',
+        path: '/about',
+        component: About
+    },
 
-   {
-      name: 'user',
-      path: '/user/:id',
-      component: User
-   },
+    {
+        name: 'user',
+        path: '/user/:id',
+        component: User
+    },
 
-   {
-      name: 'login',
-      path: '/login',
-      component: Login,
-      meta: {
-         requiresGuest: true
-      }
-   },
+    {
+        name: 'login',
+        path: '/login',
+        component: Login,
+        // IF YOU WANNA PASS PROPS: this.$router.push({ name: 'login', params: { loggedIn: true } })
+        // props: true,
+        meta: {
+            requiresGuest: true
+        }
+    },
 
-   {
-      name: 'register',
-      path: '/register',
-      component: Register,
-      meta: {
-         requiresGuest: true
-      }
-   },
+    {
+        name: 'register',
+        path: '/register',
+        component: Register,
+        meta: {
+            requiresGuest: true
+        }
+    },
 
-   {
-      name: 'logout',
-      path: '/logout',
-      component: Logout,
-      meta: {
-         requiresAuth: true
-      }
-   },
+    {
+        name: 'logout',
+        path: '/logout',
+        component: Logout,
+        meta: {
+            requiresAuth: true
+        }
+    },
 
 
 ]

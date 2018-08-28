@@ -12,9 +12,9 @@
                     <v-flex xs12>
                         <transition enter-active-class="animated fadeIn"
                                     leave-active-class="animated fadeOut">
-                            <v-alert v-if="apiErrors" :value="true" type="error">
+                            <v-alert v-if="serverErrors" :value="true" type="error">
                                 <ul class="standart">
-                                    <li v-for="(value, key) in apiErrors" :key="key">
+                                    <li v-for="(value, key) in serverErrors" :key="key">
                                         {{ value[0] }}
                                     </li>
                                 </ul>
@@ -30,7 +30,8 @@
                                 label="Full name"
                                 type="text"
                                 :class="{ hasError: errors.has('name') }"
-                                :rules="( errors.first('name')) ? [errors.first('name')] : [true]"
+                                :rules="( errors.has('name')) ? [errors.first('name')] : [true]"
+                                :error-messages="errors.has('name') ? [errors.first('name')] : []"
                                 v-validate="'required'"
                                 v-on:keyup.enter="register"
                                 clearable
@@ -44,10 +45,12 @@
                                 v-model="email"
                                 label="Email"
                                 type="text"
-                                :rules="( errors.first('email')) ? [errors.first('email')] : [true]"
+                                :rules="( errors.has('email')) ? [errors.first('email')] : [true]"
+                                :error-messages="errors.has('email') ? [errors.first('email')] : []"
                                 v-validate="'required|email'"
                                 v-on:keyup.enter="register"
                                 clearable
+                                persistentHint
                                 solo></v-text-field>
 
                         <v-text-field
@@ -56,7 +59,8 @@
                                 name="password"
                                 v-model="password"
                                 label="Password"
-                                :rules="( errors.first('password')) ? [errors.first('password')] : [true]"
+                                :rules="( errors.has('password')) ? [errors.first('password')] : [true]"
+                                :error-messages="errors.has('password') ? [errors.first('password')] : []"
                                 :type="showPasswords ? 'text' : 'password'"
                                 v-validate="'required|min:6'"
                                 v-on:keyup.enter="register"
@@ -88,13 +92,17 @@
             Spinner
         },
 
+        created(){
+            this.$toast('f','x', 'success')
+        },
+
         data() {
 
             return {
                 isLoading: false,
                 showPasswords: false,
 
-                apiErrors: '',
+                serverErrors: '',
 
                 name: '',
                 email: '',
@@ -106,38 +114,34 @@
         methods: {
 
             register() {
-                this.$validator.validateAll().then((result) => {
+                this.$validator.validateAll().then((valid) => {
 
-                    console.log(result)
+                    if (valid) {
+                        this.isLoading = true
 
+                        this.$store.dispatch('register', {
+                            name: this.name,
+                            email: this.email,
+                            password: this.password
+                        }).then(res => {
+                            this.isLoading = false
+                            this.$router.push({name: 'home'})
+                        }).catch(error => {
+                            this.isLoading = false
 
-                })
+                            this.serverErrors = Object.values(error.errors)
 
-                return;
+                            setTimeout(() => {
+                                this.serverErrors = null
+                            }, 3 * 1000)
 
-                this.isLoading = true
-
-                let _this = this
-                this.$store.dispatch('register', {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password
-                }).then(res => {
-                    this.isLoading = false
-                    this.$router.push({name: 'home'})
-                }).catch(error => {
-                    this.isLoading = false
-
-                    this.apiErrors = Object.values(error.errors)
-
-                    // setTimeout(() => {
-                    //     Object.keys(this.errors).forEach((key) => this.errors[key] = '')
-                    // }, 3 * 1000)
+                        })
+                    }
 
                 })
-            }
+            }//register
 
-        }
+        }//methods
 
     }
 </script>
