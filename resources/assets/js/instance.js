@@ -2,7 +2,7 @@ export const toast = (title, message, type = null, parameters = null) => {
 
     toaster.settings({
         position: 'bottomCenter',
-        timeout: false,
+        timeout: 5000,
         zindex: 999999,
         icon: 'material-icons',
     })

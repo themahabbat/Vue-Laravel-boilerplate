@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,600|Material+Icons);/* This is a compiled file, you should be editing the file in the templates directory */
 
 .pace {
   -webkit-pointer-events: none;
@@ -5973,6 +5973,10 @@ nav {
 .standart {
   padding: 0;
   margin: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
 }
 
 .grid {
