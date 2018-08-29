@@ -5,7 +5,9 @@
             <navbar :title="title" :show="show"/>
 
             <v-container fluid>
-                <router-view></router-view>
+                <transition name="router-transition" enter-active-class="animated fadeInDown" leave-active-class="animated flipOutX" mode="out-in">
+                    <router-view></router-view>
+                </transition>
             </v-container>
 
             <fixed class="width-full text-center" to="bottom">
@@ -99,4 +101,14 @@
 </script>
 
 <style lang="scss">
+@import '../../sass/animate';
+
+.page-wrapper {
+    animation-duration: 0.6s;
+}
+
+button {
+    outline: none !important;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <v-layout row wrap align-center justify-center>
+    <v-layout row wrap align-center justify-center class="page-wrapper">
 
         <v-flex xs10 lg4 :class="{ faded: isLoading }">
             <v-card class="elevation-12">

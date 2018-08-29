@@ -31,7 +31,7 @@ export default {
                 })
                 .catch(err => {
                     console.log(err)
-                    reject(err)
+                    reject(err.response.data)
                 })
 
         })

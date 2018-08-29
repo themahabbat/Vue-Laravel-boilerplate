@@ -1,56 +1,87 @@
 <template>
 
-    <transition name="fade" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-      <nav v-if="show" class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">{{ title || 'Brand' }}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                              <span class="navbar-toggler-icon"></span>
-                            </button>
-  
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <router-link class="nav-link" :to="{ name: 'home' }">Home <span class="sr-only">(current)</span></router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'about' }">About</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'user', params: { id: id } }">Random User</router-link>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                  </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-          </ul>
+    <transition-group
+    enter-active-class="animated fadeInDown"
+    leave-active-class="animated fadeOutUp">
 
-          <ul class="navbar-nav mr-auto">
-            
-            <li v-if="!auth" class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'login' }">Login</router-link>
-            </li>
-            <li v-if="!auth" class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
-            </li>
-            <li v-if="auth" class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'logout' }">Logout</router-link>
-            </li>
+      <v-toolbar
+      key="toolbar"
+      color="white">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 
-          </ul>
+        <v-toolbar-title>Title</v-toolbar-title>
 
-          <ul class="pull-right margin-none">
-            <h6>{{ description }} / {{ replacedTitle }}</h6>
-          </ul>
-        </div>
-      </nav>
-    </transition>
+
+        <v-spacer></v-spacer>
+
+          <v-toolbar-items class="hidden-sm-and-down">
+            <router-link class="toolbar-link" :to="{ name: 'login' }">
+              <v-btn flat v-if="!auth">
+                Login
+              </v-btn>
+            </router-link>
+
+            <router-link class="toolbar-link" :to="{ name: 'register' }">
+              <v-btn flat v-if="!auth">
+                Register
+              </v-btn>
+            </router-link>
+
+            <router-link class="toolbar-link" :to="{ name: 'logout' }">
+              <v-btn flat v-if="auth">
+                Logout
+              </v-btn>
+            </router-link>
+          
+                      
+        </v-toolbar-items>
+
+        <v-btn color="info" flat icon>
+          <v-icon>search</v-icon>
+        </v-btn>
+
+        <v-btn color="primary" flat icon>
+          <v-icon>more_vert</v-icon>
+        </v-btn>
+  </v-toolbar>
+
+  <v-navigation-drawer
+      key="drawer"
+      v-model="drawer"
+      absolute
+      temporary
+    >
+      <v-list class="pa-1">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+          </v-list-tile-avatar>
+
+          <v-list-tile-content>
+            <v-list-tile-title>John Leider</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+
+        <v-list-tile
+          v-for="item in items"
+          :key="item.title"
+          @click=""
+        >
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    </transition-group>
 
 </template>
 
@@ -78,6 +109,11 @@
     data() {
   
       return {
+        drawer: null,
+        items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ],
         description: this.$store.state.title
       }
   
@@ -104,4 +140,14 @@
 
 <style lang="scss" scoped>
   // SCOPED MEANS FOR THIS COMPONENT ONLY, NOT GLOBAL
+
+  a.toolbar-link {
+    text-decoration: none;
+    color: #fff;
+
+    button {
+      height: 100% !important;
+    }
+
+  }
 </style>
