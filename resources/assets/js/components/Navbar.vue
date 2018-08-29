@@ -11,6 +11,14 @@
 
         <v-toolbar-title>Title</v-toolbar-title>
 
+        <v-spacer></v-spacer>
+
+        <router-link class="toolbar-link" :to="{ name: 'login' }">
+              <v-btn flat v-if="!auth">
+                Login
+              </v-btn>
+            </router-link>
+
 
         <v-spacer></v-spacer>
 
