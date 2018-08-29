@@ -1,23 +1,17 @@
 <template>
-   <div class="content text-center">
+    <div class="content text-center">
 
-      <h4 class="margin-top-25">
-         ID: {{ id }}
-      </h4>
+        <h4 class="margin-top-25">
+            ID: {{ id }}
+        </h4>
 
-   </div>
+    </div>
 </template>
 
 <script>
-export default {
-   name: 'User',
+    export default {
+        name: 'User',
 
-   data(){
-
-      return {
-         id: this.$route.params.id
-      }
-
-   }
-}
+        props: ['id']
+    }
 </script>

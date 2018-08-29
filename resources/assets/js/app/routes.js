@@ -2,6 +2,8 @@ import Home from '../pages/Home'
 import About from '../pages/About'
 import User from '../pages/User'
 
+import NotFound404 from '../pages/NotFound404'
+
 import Login from '../auth/Login'
 import Register from '../auth/Register'
 import Logout from '../auth/Logout'
@@ -27,6 +29,19 @@ export default [
     {
         name: 'user',
         path: '/user/:id',
+        // props:true MEANS YOU CAN USE {{ id }} instead of {{ $route.params.id }}
+        // THAT MEANS id property will get its value from route params
+        // YOU JUST HAVE TO DEFINE PROPERTY LIKE: props: ['id']
+        props: true,
+
+        // THIS WAY YOU CAN CHANGE TYPES OF PROPERTIES (AS ALL ROUTE PARAMS ARE STRING)
+        // DIFFERENCE IS YOU CAN DEFINE TYPE OF PROPERTIES IN COMPONENT LIKE BELOW
+        // props: { id: { type: Number, required: true } }
+        props(route){
+            const props = { ...route.params }
+            props.id = Number(props.id)
+            return props
+        },
         component: User
     },
 
@@ -34,8 +49,6 @@ export default [
         name: 'login',
         path: '/login',
         component: Login,
-        // IF YOU WANNA PASS PROPS: this.$router.push({ name: 'login', params: { loggedIn: true } })
-        // props: true,
         meta: {
             requiresGuest: true
         }
@@ -58,6 +71,12 @@ export default [
             requiresAuth: true
         }
     },
+
+    {
+        name: '404',
+        path: '*',
+        component: NotFound404
+    }
 
 
 ]
