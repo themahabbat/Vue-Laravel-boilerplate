@@ -17487,9 +17487,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
 
     return {
-
       drawer: false,
-      items: [{ title: 'Home', icon: 'dashboard' }, { title: 'About', icon: 'question_answer' }],
       description: this.$store.state.title
     };
   },
@@ -17499,6 +17497,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   computed: {
     toolbar: function toolbar() {
       return {
+
         main: [{ title: 'Home', icon: 'home', route: { name: 'home' } }, { title: 'About', icon: 'info', route: { name: 'about' } }, { title: 'Random user', icon: 'sort', route: { name: 'user', params: { id: this.id } } }],
 
         right: [{ title: 'Login', route: { name: 'login' }, if: !this.auth }, { title: 'Register', route: { name: 'register' }, if: !this.auth }, { title: 'Logout', route: { name: 'logout' }, if: this.auth }]
@@ -17702,7 +17701,14 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-menu",
-            { staticClass: "hidden-md-and-up", attrs: { "offset-y": "" } },
+            {
+              staticClass: "hidden-md-and-up",
+              attrs: {
+                "offset-y": "",
+                transition: "slide-x-transition",
+                origin: "center center"
+              }
+            },
             [
               _c(
                 "v-btn",
@@ -19268,6 +19274,7 @@ var index_esm = {
     title: 'Store Data :]',
 
     token: localStorage.getItem('access_token') || null
+
 });
 
 /***/ }),

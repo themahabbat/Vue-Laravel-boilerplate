@@ -76,7 +76,7 @@
           <v-icon>search</v-icon>
         </v-btn>
 
-        <v-menu offset-y class="hidden-md-and-up">
+        <v-menu offset-y transition="slide-x-transition" origin="center center" class="hidden-md-and-up">
           <v-btn slot="activator" flat icon>
             <v-icon>more_vert</v-icon>
           </v-btn>
@@ -120,12 +120,7 @@
     data() {
   
       return {
-
         drawer: false,
-        items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
-        ],
         description: this.$store.state.title
       }
   
@@ -136,6 +131,7 @@
       
       toolbar(){
         return {
+          
           main: [
             { title: 'Home', icon: 'home', route: { name: 'home' } },
             { title: 'About', icon: 'info', route: { name: 'about' } },
